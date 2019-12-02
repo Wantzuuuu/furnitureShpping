@@ -1,0 +1,69 @@
+$product-primary:#181818;
+$product-secondary:white;
+.bg-cover{
+    background-position:center center;
+    background-size:cover;
+}
+
+// jumbertron
+    .jumbotron-block{
+        background-color:rgba(0,0,0,0.3);
+    }
+
+.product-box{
+    position:relative;
+    width:100%;
+    .product-img{
+        overflow: hidden;
+        position: relative;
+        width:100%;
+        height:400px;
+        background-size:cover;
+        background-position:center center;
+    }
+    .product-img-block{
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        background-color:rgba(0,0,0,0.3);
+        transition:all .8s ease;
+        opacity:0;
+        button.block-product-btn{
+            width:45px;
+            height:30px;
+            border:1px solid white;
+            color:white;
+        }
+    }
+    .product-content{
+        // border:1px solid $product-primary;
+        padding:15px;
+        width:100%;
+        // background-color:$product-secondary;
+        color:$product-primary;
+    }
+    .product-btn{
+        position:absolute;
+        bottom:-60px;
+        width:100%;
+        height:44px;
+        background-color:$product-primary;
+        color:$product-secondary;
+        filter:brightness(1);
+        // border-radius:5px;
+        transition:bottom 0.8s;
+        border:none;
+        z-index:100;
+    }
+    .product-btn:hover{
+        filter:brightness(1.5);
+    }
+}
+.product-box:hover .product-btn{
+    bottom:0;
+}
+.product-box:hover .product-img-block{
+    opacity:1;
+}
