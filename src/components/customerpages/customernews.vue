@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container-fluid">
-            <div class="mt-7" style="min-height:70vh;">
+            <div class="mt-7 py-5" style="min-height:70vh;">
                 <h2 class="text-center">NEWS</h2>
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-7">

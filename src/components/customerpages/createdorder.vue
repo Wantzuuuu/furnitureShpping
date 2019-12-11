@@ -94,7 +94,7 @@
                             if(response.data.success){
                                 vm.$router.push(`/customer_website/checkout_page/checkout/${response.data.orderId}`);
                             }
-                            vm.$bus.$emit('messsage:push',"付款成功",'success');
+                            vm.$bus.$emit('messsage:push',"訂單成立",'success');
                             vm.$bus.$emit("updateCart");
                             vm.isLoading = false;
                             });

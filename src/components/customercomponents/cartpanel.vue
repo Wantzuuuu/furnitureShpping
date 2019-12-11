@@ -16,11 +16,12 @@
                         <div>
                             <h6 class="mb-0">{{i.product.title}}</h6>
                             <p class="mb-0">{{i.qty}}{{i.product.unit}}</p>
-                            <p class="mb-0">NT.{{i.final_total |currency}}</p>
+                            <p class="mb-0">NT {{i.final_total |currency}}</p>
                         </div>
                     </div>
                     <div class="cart-remove">
-                        <a @click.prevent="deleteProduct(i.id)" class="text-danger"><i class="far fa-trash-alt"></i></a>
+                        <a v-if="!deleteState" @click.prevent="deleteProduct(i.id)" class="text-danger"><i class="far fa-trash-alt"></i></a>
+                         <i v-if="deleteState" class="fas fa-spinner fa-spin"></i>
                     </div>
                 </div>
                 <div v-if="cartLen != 0" class="checkout-box">
@@ -38,7 +39,7 @@
     import $ from 'jquery';
     export default{
         name:"CartPanel",
-        props:['cartPanel','cartLen'],
+        props:['cartPanel','cartLen','deleteState'],
         watch:{
             cartLen (){
                 if(this.cartLen>5){
@@ -94,7 +95,7 @@
         left:0;
         width:23%;
         display:flex;
-        z-index:10000;
+        z-index:20;
          transition:all 1.2s ease;
     }
     .cart-panel.active{
@@ -117,7 +118,7 @@
         position:fixed;
         top:0;
         left:0;
-        z-index:9999;
+        z-index:19;
         width:100%;
         height:100vh;
         background-color:rgba(0,0,0,0.3);

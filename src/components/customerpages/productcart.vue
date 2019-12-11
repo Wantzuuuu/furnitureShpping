@@ -41,7 +41,7 @@
                                 <div class="col-6">
                                     <div class="cart-data">
                                         <div>
-                                            <h3>{{item.product.title}}</h3>
+                                            <h5>{{item.product.title}}</h5>
                                             <div v-if="item.coupon" class="text-success text-center">已使用優惠卷</div>
                                             <div class="text-center"><a @click.prevent="deleteCart(item.id)" class="text-danger" href="#">移除</a></div>
                                         </div>
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="cart-data">
-                                        <div class="h4 ml-2">NT.{{item.product.price * item.qty}}</div>
+                                        <div class="h4 ml-2">NT {{item.product.price * item.qty | currency}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -87,11 +87,11 @@
                                     </div>
                                     <div class="col-6">
                                         <div v-if="carts.total == carts.final_total">
-                                            <div class="h6 mb-0 text-right">NT.{{carts.total}}</div>
+                                            <div class="h6 mb-0 text-right">NT {{carts.total | currency}}</div>
                                         </div>
                                         <div v-else>
-                                            <del class="text-danger d-block text-right">NT.{{carts.total}}</del>
-                                            <div class="h6 mb-0 text-right">NT.{{carts.final_total}}</div>
+                                            <del class="text-danger d-block text-right">NT.{{carts.total | currency}}</del>
+                                            <div class="h6 mb-0 text-right">NT {{carts.final_total | currency}}</div>
                                         </div>
                                     </div>
                                 </div>

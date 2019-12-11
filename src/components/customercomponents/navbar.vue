@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top z-index-15">
             <div class="container">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -26,6 +26,9 @@
                         </li>
                         <li @click="navState='商品'" :class="{'active': navState == '商品'}" class="nav-item">
                             <router-link class="nav-link" to="/customer_website/products/all">商品</router-link>
+                        </li>
+                        <li @click="navState='風格參考'" :class="{'active': navState == '風格參考'}" class="nav-item">
+                            <router-link class="nav-link" to="/customer_website/style">風格參考</router-link>
                         </li>
                         <li @click="navState='最新消息'" :class="{'active': navState == '最新消息'}" class="nav-item">
                             <router-link class="nav-link" to="/customer_website/news">最新消息</router-link>
@@ -56,6 +59,9 @@ import $ from "jquery";
 </script>
 
 <style>
+    .z-index-15{
+        z-index:15;
+    }
     .box-logo{
         padding:5px;
         background-color:#231f20;

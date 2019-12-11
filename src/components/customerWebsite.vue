@@ -3,7 +3,7 @@
     <Loading :active.sync="isLoading"></Loading>
         <Navbar :navbarLen="cartLen"></Navbar>
         <alert></alert>
-        <cartPanel :cartPanel="carts" :cartLen="cartLen" @deleteProduct="deleteCart"></cartPanel>
+        <cartPanel :cartPanel="carts" :cartLen="cartLen" :deleteState="status.deleteCart" @deleteProduct="deleteCart"></cartPanel>
         <router-view></router-view>
          <!--footer-->
             <Footer></Footer>
@@ -32,6 +32,9 @@
                 carts:[],
                 isLoading:false,
                 cartLen:0,
+                status:{
+                    deleteCart:false,
+                },
             }
         },
         methods:{
@@ -58,12 +61,14 @@
             deleteCart(id){
                 const vm = this ; 
                 vm.isLoading=true;
+                vm.status.deleteCart = true;
                 const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`
                 vm.$http.delete(url).then((response)=>{
                     // console.log(response)
                     // vm.$bus.$emit('updateCart');
                     vm.getCart();
                     vm.isLoading=false;
+                    vm.status.deleteCart = false;
                 })
             }
         // cart end

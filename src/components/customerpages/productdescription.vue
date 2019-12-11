@@ -1,14 +1,13 @@
 <template>
     <div>
-    <Loading :active.sync="isLoading"></Loading>
-        <section class="mt-7 pt-2">
+        <section class="mt-7 py-5 pt-2">
              <div class="container">
                 <div class="row">
                     <div class="col-md-8">
                         <img width="100%" class="dc-img" :src="product.imageUrl" alt="">
                     </div>
                     <div class="col-md-4">
-                        <div class="p-3 sticky-top">
+                        <div class="p-3 sticky-top z-index-9">
                             <h3>{{product.title}}</h3>
                             <hr>
                             <p>{{product.description}}</p>
@@ -26,7 +25,12 @@
                                             <button @click="addCount(1)" class="btn btn-outline-primary" type="button">+</button>
                                         </div>
                                     </div>
-                                    <button @click="addCart(product.id,qty)" class="btn btn-block btn-primary">加入購物車</button>
+                                    <button v-if="!state.addState"  @click="addCart(product.id,qty)" class="btn btn-block btn-primary">
+                                        <div class="d-inline">加入購物車</div>
+                                    </button>
+                                     <button v-if="state.addState"class="btn btn-block btn-primary">
+                                         <i class="fas fa-spinner fa-spin"></i>
+                                    </button>
                             </div>
                         </div>
                     </div>
@@ -49,18 +53,14 @@
         components:{
             productCard,
         },
-        // watch:{
-        //     productId(){
-        //         if(this.$route.params.productId != this.productId){
-        //             this.productId = this.$route.params.productId;
-        //         }
-        //     }
-        // },
         data(){
             return{
                 productId:'',
                 product:{},
                 isLoading:false,
+                state:{
+                    addState:false,
+                },
                 qty:1,
                 test:'',
                 products:[],
@@ -95,21 +95,6 @@
                 vm.productId = vm.$route.params.productId;
                 vm.getProduct();
             },
-            addCart(id,qty=1){
-                const vm = this;
-                vm.isLoading=true;
-                const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-                const cart = {
-                    product_id: id,
-                    qty:qty
-                }
-                console.log(cart);
-                vm.$http.post(url,{data:cart}).then((response)=>{
-                    console.log(response);
-                    vm.$bus.$emit('updateCart');
-                    vm.isLoading=false;
-                });
-            },
             goBack(){
                 this.$router.go(-1);
             },
@@ -122,20 +107,26 @@
                     this.qty=qty-1;
                 }
             },
-            addCart(id,qty=1){
+            addCart( id,qty=1){
                 const vm = this;
-                vm.isLoading=true;
-                const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-                const cart = {
-                    product_id: id,
-                    qty:qty
+                vm.state.addState=true;
+                if(qty < 1){
+                    qty = 1;
+                    this.qty = qty;
+                }else{
+                    qty = qty;
                 }
-                console.log(cart);
-                vm.$http.post(url,{data:cart}).then((response)=>{
-                    console.log(response);
-                    vm.$bus.$emit('updateCart');
-                    vm.isLoading=false;
-                });
+                const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+                    const cart = {
+                        product_id: id,
+                        qty:qty
+                    }
+                    // console.log(cart);
+                    vm.$http.post(url,{data:cart}).then((response)=>{
+                        // console.log(response);
+                        vm.$bus.$emit('updateCart');
+                        vm.state.addState=false;
+                    });
             },
         },
         computed:{
@@ -160,6 +151,9 @@
 </script>
 
 <style>
+    .z-index-9{
+        z-index:9;
+    }
     .dc-img{
         height:500px;
     }

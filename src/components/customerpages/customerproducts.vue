@@ -23,10 +23,11 @@
     </div>
     <section>
         <div class="container">
-            <div class="form-row mt-3">
+            <div class="py-5">
+                <div class="form-row mt-3">
                 <!--list group-->
                 <div class="col-md-3">
-                    <div class="list-group sticky-top">
+                    <div class="list-group sticky-top z-index-9">
                         <h4 class="border p-3 mb-0">商品列表</h4>
                         <div class="list-group ">
                             <button @click="changeProduct('all')" :class="{'active':productTarget=='all'}" class="list-group-item   list-group-item-action"  style="outline:none;">全部</button>
@@ -44,14 +45,14 @@
                         <input v-model="searchProduct" type="text" class="form-control" placeholder="search" aria-label="Username" aria-describedby="addon-wrapping">
                     </div>
                     <div class="form-row">
-                        <productCard v-for="i in filterProduct" :productCard="i" @emitProduct="goDescription" @emitAddCart="addCart" :key="i.id"></productCard>
+                        <productCard v-for="i in filterProduct" :productCard="i" :productState="state.addState" @emitProduct="goDescription" @emitAddCart="addCart" :key="i.id"></productCard>
                     </div>
                     
                 </div>
                 <!--products end-->
                 
             </div>
-                
+            </div>    
         </div>
     </section>
         
@@ -72,6 +73,9 @@ import productCard from "../customercomponents/productcard"
                 category:[],
                 productTarget:"",
                 isLoading:false,
+                state:{
+                    addState:false,
+                },
                 searchProduct:"",
             }
         },
@@ -107,6 +111,7 @@ import productCard from "../customercomponents/productcard"
             addCart(id,qty=1){
                 const vm = this;
                 vm.isLoading=true;
+                vm.state.addState = true;
                 const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
                 const cart = {
                     product_id: id,
@@ -117,6 +122,7 @@ import productCard from "../customercomponents/productcard"
                     console.log(response);
                     vm.$bus.$emit('updateCart');
                     vm.isLoading=false;
+                    vm.state.addState = false;
                     vm.$bus.$emit('openCartPanel');
                     // this.$bus.$emit('messsage:push',response.data.message,'danger');
                 });
@@ -152,6 +158,9 @@ import productCard from "../customercomponents/productcard"
 </script>
 
 <style scope>
+    .z-index-9{
+        z-index:9;
+    }
     .header-img{
         position:relative; 
         width:100%; 

@@ -9,6 +9,7 @@ import customOrder from '@/components/dashboardOrder/customOrder'
 import customCheckout from '@/components/dashboardOrder/customCheckout'
 import customerWebsite from '@/components/customerWebsite'
 import customerIndex from '@/components/customerpages/customerIndex'
+import stylePage from '@/components/customerpages/stylepage'
 import customerNews from '@/components/customerpages/customernews'
 import customerProduct from '@/components/customerpages/customerproducts'
 import productDescription from '@/components/customerpages/productdescription'
@@ -36,6 +37,12 @@ export default new Router({
           name: "Index",
           path: "index",
           component: customerIndex,
+        },
+        // 風格參考
+        {
+          name: "Style",
+          path: "style",
+          component: stylePage,
         },
         // 商品頁面
         {
@@ -135,5 +142,13 @@ export default new Router({
     //     },
     //   ]
     // },
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    // console.log(savedPosition);
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
