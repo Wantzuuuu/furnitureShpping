@@ -385,13 +385,16 @@ import $ from "jquery";
         }
     }
    @media (max-width:576px){
-       .header-box{
-           .title-box{
-           h1{
-               font-size:46px;
-           }
-       }
-       }
+        .i-header-img{
+            background-attachment:scroll;
+                .header-box{
+                    .title-box{
+                    h1{
+                        font-size:46px;
+                    }
+                }
+            }
+        }
    }
     }
    //living-room
