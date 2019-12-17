@@ -1,10 +1,12 @@
 <template>
     <div>
-    <header class="bg-cover i-header-img" style="background-image:url(https://images.unsplash.com/photo-1488901512066-cd403111aeb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2978&q=80)">
-        <div class="header-box">
-            <div class="title-box text-info">
-                <h1 class="text-center acme">ROCK FURNITURE</h1>
-                <h4 class="acme text-center">life is good</h4>
+    <header>
+        <div class="bg-cover i-header-img" style="background-image:url(https://images.unsplash.com/photo-1488901512066-cd403111aeb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2978&q=80)">
+             <div class="header-box">
+                <div class="title-box text-info">
+                    <h1 class="text-center acme">ROCK FURNITURE</h1>
+                    <h4 class="acme text-center">life is good</h4>
+                </div>
             </div>
         </div>
     </header>
@@ -354,16 +356,21 @@ import $ from "jquery";
         background-color:#181818;
     }
     // header
-    .i-header-img{
-        width:100%;
+    header{
+        max-width:100%;
+        overflow:hidden;
+        .i-header-img{
         height:100vh;
         background-attachment:fixed;
+        background-repeat: no-repeat;
         transition:all .3s ease;
         display:flex;
         align-items:center;
+        transform:scale(1);
     }
     .i-header-img.i-fix{
         filter:blur(5px);
+        transform: scale(1.05);
     }
     .header-box{
         color:$header-color;
@@ -386,6 +393,7 @@ import $ from "jquery";
        }
        }
    }
+    }
    //living-room
     .i-description{
         height:100%;
