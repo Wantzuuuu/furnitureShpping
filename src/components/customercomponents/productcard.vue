@@ -23,9 +23,11 @@
                             </div>                  
                         </div>
                     </div>
-                    <button @click="addCart(productCard.id)" class="product-btn">
+                    <button v-if="!productState" @click="addCart(productCard.id)" class="product-btn">
                         加入購物車
-                        <i v-if="productState" class="fas fa-spinner fa-spin"></i>
+                    </button>
+                     <button v-if="productState" class="product-btn">
+                        <i class="fas fa-spinner fa-spin"></i>
                     </button>
                 </div>
             <div class=" product-content  text-primary">

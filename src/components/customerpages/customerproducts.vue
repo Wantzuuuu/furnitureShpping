@@ -1,16 +1,5 @@
 <template>
     <div>
-    <Loading :active.sync="isLoading"></Loading>
-    <!--jumbertron 
-        <div class="jumbotron jumbotron-fluid bg-cover text-white d-flex align-items-center mt-7" style="background-image:url(https://images.unsplash.com/photo-1521782462922-9318be1cfd04?ixlib=rb-1.2.1&auto=format&fit=crop&w=1955&q=80)">
-            <div class="container">
-                <div class="jumbotron-block p-3">
-                    <h1 class="display-4 py-3">空間佈置靈感,讓您有一個美好的家</h1>
-                    <p class="lead">讓您負擔少一點,生活品質更好！</p>
-                </div>
-            </div>
-        </div>
-    jumbertron end-->
     <div class="container">
         <header class="mt-7 bg-cover header-img" style="background-image:url(https://images.unsplash.com/photo-1465497250320-c0140afcea39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1955&q=80)">
             <div class="header-card d-flex justify-content-center align-items-center">
@@ -45,7 +34,7 @@
                         <input v-model="searchProduct" type="text" class="form-control" placeholder="search" aria-label="Username" aria-describedby="addon-wrapping">
                     </div>
                     <div class="form-row">
-                        <productCard v-for="i in filterProduct" :productCard="i" :productState="state.addState" @emitProduct="goDescription" @emitAddCart="addCart" :key="i.id"></productCard>
+                        <productCard v-for="i in filterProduct" :productCard="i" :productState="addState" @emitProduct="goDescription" @emitAddCart="addCart" :key="i.id"></productCard>
                     </div>
                     
                 </div>
@@ -68,36 +57,13 @@ import productCard from "../customercomponents/productcard"
         },
         data(){
             return{
-                products:[],
-                // pagination:{},
-                category:[],
                 productTarget:"",
-                isLoading:false,
-                state:{
-                    addState:false,
-                },
-                searchProduct:"",
+                searchProduct:"",                        
             }
         },
         methods:{
             getProducts(){
-                const api =`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all` //"https://vue-course-api.hexschool.io/api/joshwan/products"
-                const vm = this;
-                vm.isLoading = true; 
-                this.$http.get(api).then((response) => {
-                    vm.products = response.data.products;
-                    // vm.pagination=response.data.pagination;
-                    //  console.log(vm.products);
-                    //  console.log(vm.pagination);
-                    //  加入種類到category
-                    vm.products.forEach((v)=>{
-                        if(vm.category.indexOf(v.category)== -1){
-                            vm.category.push(v.category);
-                        }
-                    })
-                    // console.log(response);
-                    vm.isLoading=false;
-            }) ;
+                this.$store.dispatch("getProducts");
             },
             changeProduct(select){
                 const vm = this;
@@ -109,26 +75,36 @@ import productCard from "../customercomponents/productcard"
                     vm.$router.push(`/customer_website/product/${id}`)
             },
             addCart(id,qty=1){
-                const vm = this;
-                vm.isLoading=true;
-                vm.state.addState = true;
-                const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-                const cart = {
-                    product_id: id,
-                    qty:qty
-                }
-                console.log(cart);
-                vm.$http.post(url,{data:cart}).then((response)=>{
-                    console.log(response);
-                    vm.$bus.$emit('updateCart');
-                    vm.isLoading=false;
-                    vm.state.addState = false;
-                    vm.$bus.$emit('openCartPanel');
-                    // this.$bus.$emit('messsage:push',response.data.message,'danger');
-                });
+                this.$store.dispatch('addCart',{id,qty})   
+                this.$bus.$emit('openCartPanel');
+                // this.state.addState = false;             
+                // const vm = this;
+                // vm.state.addState = true;
+                // const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+                // const cart = {
+                //     product_id: id,
+                //     qty:qty
+                // }
+                // console.log(cart);
+                // vm.$http.post(url,{data:cart}).then((response)=>{
+                //     console.log(response);
+                //     vm.$bus.$emit('updateCart');
+                //     vm.state.addState = false;
+                //     vm.$bus.$emit('openCartPanel');
+                //     // this.$bus.$emit('messsage:push',response.data.message,'danger');
+                // });
             },
         },
         computed:{
+            products(){
+                return this.$store.state.products;
+            },
+            addState(){
+                return this.$store.state.productState.addState;  
+            },
+            category(){
+                return this.$store.state.category;
+            },
             filterProduct(){
                 const vm = this;
                 if(vm.productTarget=='all'){
@@ -145,14 +121,14 @@ import productCard from "../customercomponents/productcard"
                         return vm.productTarget == v.category;
                     })
                 }
-            }
+            },
         },
         created(){
             this.getProducts();
             this.productTarget=this.$route.params.category;
-            this.$bus.$on('push:getProducts',()=>{
-                this.getProducts();
-            })
+            // this.$bus.$on('push:getProducts',()=>{
+            //     this.getProducts();
+            // })
         }
     }
 </script>

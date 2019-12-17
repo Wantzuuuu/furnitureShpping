@@ -24,7 +24,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3" class="text-right">總計</td>
-                                    <td class="text-right">{{table.final_total|currency}}</td>
+                                    <td class="text-right">NT{{table.final_total|currency}}</td>
                                 </tr>
                             </tfoot>
                     </table>

@@ -1,7 +1,7 @@
 <template>
     <div style="position:relative;">
     <Loading :active.sync="isLoading"></Loading>
-        <Navbar :navbarLen="cartLen"></Navbar>
+        <Navbar :navbarLen="cartLen" :navbarPath="path" :navPath="pathState"></Navbar>
         <alert></alert>
         <cartPanel :cartPanel="carts" :cartLen="cartLen" :deleteState="status.deleteCart" @deleteProduct="deleteCart"></cartPanel>
         <router-view></router-view>
@@ -17,6 +17,7 @@
         import cartPanel from "./customercomponents/cartpanel";
         import Footer from "./customercomponents/footer";
         import alert from './alertMessage';
+        import {mapGetters} from "vuex";
     export default{
         components:{
             Carousel,
@@ -28,51 +29,45 @@
         name:"Customer-website",
         data(){
             return{
-                products:[],
-                carts:[],
-                isLoading:false,
-                cartLen:0,
                 status:{
-                    deleteCart:false,
+                    deleteCart:"",
                 },
+                path:"",
             }
         },
         methods:{
-       getProducts (page=1){
-            const api =`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products?page=${page}` //"https://vue-course-api.hexschool.io/api/joshwan/products"
-            const vm = this;
-            this.$http.get(api).then((response) => {
-                vm.products = response.data.products;
-                // console.log(response.data);
-            });
+       getProducts(){
+            this.$store.dispatch('getProducts');
         },
-        // cart
-             getCart(){
-                const vm = this ; 
-                vm.isLoading=true;
-                const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`
-                vm.$http.get(url).then((response)=>{
-                    vm.carts = response.data.data;
-                    vm.cartLen = vm.carts.carts.length;
-                    // console.log(vm.carts);
-                    vm.isLoading=false;
-                })
-            },
-            deleteCart(id){
-                const vm = this ; 
-                vm.isLoading=true;
-                vm.status.deleteCart = true;
-                const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`
-                vm.$http.delete(url).then((response)=>{
-                    // console.log(response)
-                    // vm.$bus.$emit('updateCart');
-                    vm.getCart();
-                    vm.isLoading=false;
-                    vm.status.deleteCart = false;
-                })
+         getCart(){
+            this.$store.dispatch('getCart');
+        },
+         deleteCart(id){
+             this.$store.dispatch("deleteCart",id);
+             this.status.deleteCart = id;
+         }
+    },
+    computed:{
+        pathState(){
+            if(this.path== "/customer_website/index"){
+                return true ;
+            }else{
+                return false;
             }
-        // cart end
-
+        },
+        isLoading(){
+            return this.$store.state.isLoading;
+        },
+        products(){
+            return this.$store.state.products;
+        },
+        category(){
+            return this.$store.state.category;
+        },
+        carts(){
+            return this.$store.state.carts;
+        },
+        ...mapGetters(['cartLen']),
     },
     created(){
             this.getProducts();
@@ -80,7 +75,13 @@
             this.$bus.$on('updateCart',()=>{
                 this.getCart();
             });
-        }
+            this.path=this.$route.path;
+        },
+        watch: {
+        '$route' (to, from) {
+            this.path = this.$route.path;
+        },
+    }
     } 
 </script>
 

@@ -38,12 +38,6 @@ export default new Router({
           path: "index",
           component: customerIndex,
         },
-        // 風格參考
-        {
-          name: "Style",
-          path: "style",
-          component: stylePage,
-        },
         // 商品頁面
         {
           name: "CustomerProduct",

@@ -1,7 +1,6 @@
 <template>
     <div>
-        <Loading :active.sync="isLoading"></Loading>
-        <div class="mt-7">
+        <div class="my-10">
             <div class="container">
                 <checkoutTable :table="carts"></checkoutTable>
                 <hr>
@@ -20,18 +19,17 @@ import checkoutTable from '../customercomponents/checkoutTable';
         },
         data(){
             return {
-                isLoading:false,
                 carts:[],
             }
         },
         methods:{
                 getCart(){
                     const vm = this ; 
-                    vm.isLoading=true;
+                    vm.$store.dispatch('updateLoading',true);
                     const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
                     vm.$http.get(url).then((response)=>{
                         vm.carts = response.data.data;
-                        vm.isLoading = false;
+                        vm.$store.dispatch('updateLoading',false);
                     })
                 },
         },

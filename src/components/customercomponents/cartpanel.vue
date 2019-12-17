@@ -20,8 +20,11 @@
                         </div>
                     </div>
                     <div class="cart-remove">
-                        <a v-if="!deleteState" @click.prevent="deleteProduct(i.id)" class="text-danger"><i class="far fa-trash-alt"></i></a>
-                         <i v-if="deleteState" class="fas fa-spinner fa-spin"></i>
+                        <a @click.prevent="deleteProduct(i.id)" class="">
+                            <i v-if="deleteState!=i.id" class="far fa-trash-alt text-danger"></i>
+                            <i v-if="deleteState==i.id" class="fas fa-spinner fa-spin"></i>
+                        </a>
+                         
                     </div>
                 </div>
                 <div v-if="cartLen != 0" class="checkout-box">

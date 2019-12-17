@@ -25,10 +25,10 @@
                                             <button @click="addCount(1)" class="btn btn-outline-primary" type="button">+</button>
                                         </div>
                                     </div>
-                                    <button v-if="!state.addState"  @click="addCart(product.id,qty)" class="btn btn-block btn-primary">
+                                    <button v-if="!addState"  @click="addCart(product.id,qty)" class="btn btn-block btn-primary">
                                         <div class="d-inline">加入購物車</div>
                                     </button>
-                                     <button v-if="state.addState"class="btn btn-block btn-primary">
+                                     <button v-if="addState"class="btn btn-block btn-primary">
                                          <i class="fas fa-spinner fa-spin"></i>
                                     </button>
                             </div>
@@ -57,36 +57,22 @@
             return{
                 productId:'',
                 product:{},
-                isLoading:false,
-                state:{
-                    addState:false,
-                },
                 qty:1,
-                test:'',
-                products:[],
             }
         },
         methods:{
             getProduct(){
                 const vm = this ;
-                vm.isLoading=true;
+                vm.$store.dispatch('updateLoading',true);
                 const url =`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${this.productId}`;
                 vm.$http.get(url).then((response)=>{
                     vm.product = response.data.product;
                     // console.log(vm.product);
-                    vm.isLoading=false;
+                    vm.$store.dispatch('updateLoading',false);
                 })                
             },
             getProducts(){
-                const api =`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all` //"https://vue-course-api.hexschool.io/api/joshwan/products"
-                const vm = this;
-                vm.isLoading = true; 
-                this.$http.get(api).then((response) => {
-                    vm.products = response.data.products;
-                    // vm.pagination=response.data.pagination;
-                     console.log(vm.products);
-                    vm.isLoading=false;
-            }) ;
+                this.$store.dispatch("getProducts");
             },
             goDescription(id){
                 const vm = this;
@@ -109,27 +95,22 @@
             },
             addCart( id,qty=1){
                 const vm = this;
-                vm.state.addState=true;
                 if(qty < 1){
                     qty = 1;
                     this.qty = qty;
                 }else{
                     qty = qty;
                 }
-                const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-                    const cart = {
-                        product_id: id,
-                        qty:qty
-                    }
-                    // console.log(cart);
-                    vm.$http.post(url,{data:cart}).then((response)=>{
-                        // console.log(response);
-                        vm.$bus.$emit('updateCart');
-                        vm.state.addState=false;
-                    });
+                this.$store.dispatch("addCart",{id,qty}) ; 
             },
         },
         computed:{
+            products(){
+                return this.$store.state.products;
+            },
+             addState(){
+                return this.$store.state.productState.addState;  
+            },
             sameProduct(){
                 const sameProduct = [];
                 const product= this.product

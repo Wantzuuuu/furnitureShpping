@@ -1,7 +1,6 @@
 <template>
     <div>
-    <Loading :active.sync="isLoading"></Loading>
-    <header class="mt-7 bg-cover i-header-img" style="background-image:url(https://images.unsplash.com/photo-1488901512066-cd403111aeb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2978&q=80)">
+    <header class="bg-cover i-header-img" style="background-image:url(https://images.unsplash.com/photo-1488901512066-cd403111aeb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2978&q=80)">
         <div class="header-box">
             <div class="title-box text-info">
                 <h1 class="text-center acme">ROCK FURNITURE</h1>
@@ -14,11 +13,11 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="lr m-auto">
-                         <h2 class="text-primary">
+                         <h2 id="s1Title" class="text-primary animated index-title">
                             「 從細微處 感受生活 」
                         </h2>
                     </div>
-                    <div class="index-line mb-4"></div>
+                    <div id="s1Line" class="index-line mb-4 animated delay-1s"></div>
                 </div>
                 <div class="col-md-10 mt-0">
                     <Carousel></Carousel>
@@ -138,13 +137,12 @@
                             </div>
                         </div>
                          <div class="col-md-2 mt-4">
-                            <div class="index-line mb-4 d-block d-md-none"></div>
                             <div class="lr m-auto">
-                                <h2 class="text-primary">
+                                <h2 id="s2Title" class="text-primary animated index-title">
                                     「 我的家，就要有我的樣子 。 」
                                 </h2>
                             </div>
-                            <div class="index-line mb-4 d-none d-md-block"></div>
+                            <div id="s2Line" class="index-line mb-4 animated delay-1s"></div>
                         </div>
                     </div>
                 </div>
@@ -212,45 +210,8 @@
                 </div>
             </div>
         </section>
-
-
         <!--designer end-->
 
-          <!--section2-->
-        <!-- <section  class="py-7 text-white" style="background-color:#616976;">
-            <div class="container-fluid">
-                 <div class="row">
-                <div class="col-md-4 col-6">
-                    <div class="intro-box  text-center">
-                        <div class="icon py-3 ">
-                             <i class="fas fa-shipping-fast fa-5x"></i>
-                        </div>
-                            <h5>超快速度</h5>
-                            <p>72小時內迅速到你家</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-6">
-                    <div class="intro-box  text-center">
-                        <div class="icon py-3 ">
-                            <i class="fas fa-people-carry fa-5x"></i>
-                        </div>
-                            <h5>專人到你家</h5>
-                            <p>您的家具,安全到你家</p>
-                        </div>
-                </div>
-                <div class="col-md-4 col-12">
-                    <div class="intro-box  text-center">
-                        <div class="icon py-3 ">
-                            <i class="fas fa-wrench fa-5x"></i>
-                        </div>
-                        <h5>專業組裝</h5>
-                        <p>專人替您組裝</p>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </section> -->
-        <!--section2 end-->
          <!-- news -->
         <section class="py-7 bg-light">
             <div class="container">
@@ -301,7 +262,6 @@ import $ from "jquery";
         data(){
             return{
                 products:[],
-                isLoading:false,
                 target:0,
             }
         },
@@ -309,12 +269,10 @@ import $ from "jquery";
             getProducts(){
                 const api =`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?all` //"https://vue-course-api.hexschool.io/api/joshwan/products"
                 const vm = this;
-                vm.isLoading = true;
                 this.$http.get(api).then((response) => {
                     vm.products = response.data.products;
                     //  console.log(vm.products);
                     // console.log(response);
-                    vm.isLoading=false;
             }) ;
             },
             goDescription(id){
@@ -340,6 +298,26 @@ import $ from "jquery";
         },
         created(){
             this.getProducts();
+        },
+        mounted(){
+            const s1Title=$("#s1Title").offset().top;
+            const s2Title=$("#s2Title").offset().top;
+            $(window).scroll(()=>{
+                 const scroll = $(window).scrollTop();
+                 if(scroll >70){
+                     $('.i-header-img').addClass("i-fix");
+                 }else{
+                      $('.i-header-img').removeClass("i-fix");
+                 }
+                if(scroll>s1Title-170){
+                    $("#s1Title.index-title").addClass("fadeInDown");
+                    $("#s1Line").addClass("fadeIn");
+                }
+                if(scroll>s2Title-170){
+                    $("#s2Title.index-title").addClass("fadeInDown");
+                    $("#s2Line").addClass("fadeIn");
+                }
+            })
         }
     }
 </script>
@@ -354,12 +332,15 @@ import $ from "jquery";
     .lr{
         writing-mode: vertical-lr ;
     }
-    
+    .index-title{
+        opacity:0;
+    }
     .index-line{
         width:2px;
         height:100px;
         background-color:#666666;
         margin:auto;
+        opacity:0;
     }
     .d-index-line{
         width:2px;
@@ -376,7 +357,13 @@ import $ from "jquery";
     .i-header-img{
         width:100%;
         height:100vh;
-        padding-top:100px;
+        background-attachment:fixed;
+        transition:all .3s ease;
+        display:flex;
+        align-items:center;
+    }
+    .i-header-img.i-fix{
+        filter:blur(5px);
     }
     .header-box{
         color:$header-color;

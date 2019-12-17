@@ -68,7 +68,6 @@
     export default{
         data(){
             return {
-                isLoading:false,
                 carts:[],
                 form:{
                     user:{
@@ -84,7 +83,7 @@
         methods:{
                 createOrder(){
                         const vm = this ;
-                        vm.isLoading = true ;
+                        vm.$store.dispatch('updateLoading',true);
                         const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
                         this.$validator.validate().then((result)=>{
                             if(result){
@@ -96,7 +95,7 @@
                             }
                             vm.$bus.$emit('messsage:push',"訂單成立",'success');
                             vm.$bus.$emit("updateCart");
-                            vm.isLoading = false;
+                            vm.$store.dispatch('updateLoading',false);
                             });
                         }else{
                         console.log('請輸入完整');

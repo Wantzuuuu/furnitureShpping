@@ -88,14 +88,16 @@
         methods:{
             getOrder(){
                 const vm = this ;
+                vm.$store.dispatch('updateLoading',true);
                 const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order/${vm.orderId}`
                 vm.$http.get(url).then((response)=>{
                     this.order = response.data.order;
+                    vm.$store.dispatch('updateLoading',false);
                 })
             },
             payOrder:function(){
             const vm = this;
-            vm.isLoading = true;
+            vm.$store.dispatch('updateLoading',true);
             const url =`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/pay/${vm.orderId}`;
             vm.$http.post(url).then((response)=>{
                 console.log(response);
@@ -105,7 +107,7 @@
                 }else{
                     this.$bus.$emit('messsage:push',response.data.message,'danger');
                 }
-                vm.isLoading=false;
+                vm.$store.dispatch('updateLoading',false);
           })
         }
         },

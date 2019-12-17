@@ -3,12 +3,14 @@
 import Vue from 'vue';
 import App from './App';
 import axios from 'axios';
+import Vuex from 'vuex';
 import "bootstrap";
 import VueAxios from 'vue-axios';
 // 表單驗證
 import VeeValidate, { Validator } from 'vee-validate';
 import TW from 'vee-validate/dist/locale/zh_TW'
 import router from './router';
+import store from './store';
 import Loading from 'vue-loading-overlay';
 // 輪播畫面
 import VueCarousel from '@chenfengyuan/vue-carousel';
@@ -21,7 +23,8 @@ import './bus';
 // filter
 import currency from './filters/currency'
 import date from "./filters/data"
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, axios);
+Vue.use(Vuex);
 Vue.use(VeeValidate);
 Vue.use(VueCarousel);
 Vue.use(BootstrapVue)
@@ -35,6 +38,7 @@ axios.defaults.withCredentials = true;
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

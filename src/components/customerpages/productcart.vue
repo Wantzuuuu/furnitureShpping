@@ -1,7 +1,6 @@
 <template>
     <div>
-        <Loading :active.sync="isLoading"></Loading>
-        <div class="mt-7">
+        <div class="mt-10">
              <div class="container">
                 <div style="min-height:68vh;">
                     <h2 class="text-center">購物車</h2>           
@@ -43,7 +42,11 @@
                                         <div>
                                             <h5>{{item.product.title}}</h5>
                                             <div v-if="item.coupon" class="text-success text-center">已使用優惠卷</div>
-                                            <div class="text-center"><a @click.prevent="deleteCart(item.id)" class="text-danger" href="#">移除</a></div>
+                                            <div class="text-center">
+                                            <a @click.prevent="deleteCart(item.id)" class="text-danger" href="#">
+                                                <span v-if="deleteId != item.id">移除</span>
+                                                <i v-if="deleteId == item.id" class="fas fa-spinner fa-spin text-primary"></i>
+                                            </a></div>
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +108,7 @@
                                     <button @click="useCoupon" class="btn btn-outline-primary" type="button">確認</button>
                                 </div> 
                             </div>
-                            <router-link class="btn btn-danger btn-block" to="/customer_website/checkout_page">結帳去</router-link>
+                            <router-link class="mt-4 btn btn-danger btn-block" to="/customer_website/checkout_page">結帳去</router-link>
                         </div>
                     </div>
                 </div>
@@ -121,38 +124,21 @@
     export default{
         data(){
             return {
-                carts:[],
-                isLoading:false,
                 couponCode:"" ,
-                cartLen:0
+                deleteId:"",
             }
         },
         methods:{
-            getCart(){
-                const vm = this ; 
-                vm.isLoading=true;
-                const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-                vm.$http.get(url).then((response)=>{
-                    vm.carts = response.data.data;
-                    vm.isLoading = false;
-                    // console.log(vm.carts);
-                    vm.cartLen = vm.carts.carts.length;
-                })
+           getCart(){
+                this.$store.dispatch('getCart');
             },
             deleteCart(id){
-                const vm = this ; 
-                vm.isLoading=true;
-                const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`
-                vm.$http.delete(url).then((response)=>{
-                    // console.log(response)
-                    vm.getCart();
-                    this.$bus.$emit('updateCart');
-                    vm.isLoading=false;
-                })
+                this.$store.dispatch("deleteCart",id);
+                this.deleteId = id;
             },
             useCoupon(){
                 const vm = this ;
-                vm.isLoading=true;
+                vm.$store.dispatch('updateLoading',true);
                 const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
                 const coupon = {
                     code:this.couponCode
@@ -161,9 +147,17 @@
                     // console.log(response)
                     vm.getCart();
                     vm.couponCode="";
-                    vm.isLoading=false;
+                    vm.$store.dispatch('updateLoading',false);
                 })
             }
+        },
+        computed:{
+            carts(){
+                return this.$store.state.carts;
+            },
+            cartLen(){
+                return this.$store.state.cartLen;
+            },
         },
         created(){
             this.getCart();
