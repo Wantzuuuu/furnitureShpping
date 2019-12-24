@@ -72,7 +72,6 @@
     </div>
 </template>
 <script>
-    import checkoutTable from '../customercomponents/checkoutTable';
     export default{
         data(){
             return {
@@ -81,9 +80,6 @@
                     user:{}
                 }
             }
-        },
-        components:{
-            checkoutTable,
         },
         methods:{
             getOrder(){

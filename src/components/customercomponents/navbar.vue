@@ -66,7 +66,7 @@
                     </li>
                 </ul>
             </div>
-            <button  @click="openCartModal" class="cart-btn ml-2">
+            <button v-if="!isCheckout"  @click="openCartModal" class="cart-btn ml-2">
                 <span v-if="navbarLen != 0" class="badge badge-danger">{{navbarLen}}</span>
                 <i class="fas fa-shopping-cart"></i>
             </button>
@@ -77,7 +77,7 @@
 import $ from "jquery";
 
     export default{
-        props:["navbarLen","navbarPath","navPath"],
+        props:["navbarLen","navbarPath","navPath","isCheckout"],
         watch:{
             navbarPath(){
                 if(this.navbarPath){

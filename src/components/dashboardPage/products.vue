@@ -129,7 +129,7 @@
 </template>
 <script>
 import $ from 'jquery';
-import pagination from'./changePage'; 
+import pagination from'./changepage'; 
     export default{
     data (){
         return{

@@ -3,7 +3,7 @@
     <div class="col-md-6">
         <div class="product-box">
             <!--responsive-->
-            <a class="d-md-none d-block" href="#" @click.prevent="goDescription(productCard.id)">
+            <a class="d-xl-none d-block" href="#" @click.prevent="goDescription(productCard.id)">
                 <div class="product-img" :style="{backgroundImage:'url('+productCard.imageUrl+')'}">
                     <div class="product-img-block">
                         <div class="d-flex h-100 align-items-center justify-content-center p-3">                
@@ -12,24 +12,24 @@
                 </div>
             </a>
             <!--responsive end-->
-                <div class="product-img d-none d-md-block" :style="{backgroundImage:'url('+productCard.imageUrl+')'}">
-                    <div class="product-img-block">
-                        <div class="d-flex h-100 align-items-center justify-content-center p-3">
-                            <div>
-                                <p class="text-white">{{productCard.description}}</p>
-                                <div class="text-center">
-                                    <button @click="goDescription(productCard.id)" class="btn btn-sm btn-outline-white">更多</button>
-                                </div>  
-                            </div>                  
+                    <div class="product-img d-none d-xl-block" :style="{backgroundImage:'url('+productCard.imageUrl+')'}">
+                        <div class="product-img-block">
+                            <div class="d-flex h-100 align-items-center justify-content-center p-3">
+                                <div>
+                                    <p class="text-white">{{productCard.description}}</p>
+                                    <div class="text-center">
+                                        <button @click="goDescription(productCard.id)" class="btn btn-sm btn-outline-white">更多</button>
+                                    </div>  
+                                </div>                  
+                            </div>
                         </div>
+                        <button v-if="!productState" @click="addCart(productCard.id)" class="product-btn">
+                            加入購物車
+                        </button>
+                        <button v-if="productState" class="product-btn">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </button>
                     </div>
-                    <button v-if="!productState" @click="addCart(productCard.id)" class="product-btn">
-                        加入購物車
-                    </button>
-                     <button v-if="productState" class="product-btn">
-                        <i class="fas fa-spinner fa-spin"></i>
-                    </button>
-                </div>
             <div class=" product-content  text-primary">
                 <h6>{{productCard.title}}</h6>
                     <div class="">

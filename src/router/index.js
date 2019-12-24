@@ -7,11 +7,11 @@ import orders from '@/components/dashboardPage/orders'
 import counpons from '@/components/dashboardPage/counpons'
 import customOrder from '@/components/dashboardOrder/customOrder'
 import customCheckout from '@/components/dashboardOrder/customCheckout'
-import customerWebsite from '@/components/customerWebsite'
-import customerIndex from '@/components/customerpages/customerIndex'
-import stylePage from '@/components/customerpages/stylepage'
-import customerNews from '@/components/customerpages/customernews'
-import customerProduct from '@/components/customerpages/customerproducts'
+import customerWebsite from '@/components/customerwebsite'
+import customerIndex from '@/components/customerpages/index'
+// import stylePage from '@/components/customerpages/stylepage'
+import customerNews from '@/components/customerpages/news'
+import customerProduct from '@/components/customerpages/products'
 import productDescription from '@/components/customerpages/productdescription'
 // 購物車頁面
 import productCart from '@/components/customerpages/productcart'
@@ -38,7 +38,6 @@ export default new Router({
           path: "index",
           component: customerIndex,
         },
-        // 商品頁面
         {
           name: "CustomerProduct",
           path: "products/:category",
@@ -49,7 +48,7 @@ export default new Router({
           path: "news",
           component: customerNews,
         },
-        // 商品敘述
+        //商品敘述
         {
           name: "Productdescription",
           path: "product/:productId",
@@ -67,13 +66,13 @@ export default new Router({
           path: "checkout_page",
           component: checkoutPage,
           children: [
+            // 填寫訂單資料
             {
               name: "CreatOrder",
-              path: "/",
+              path: "",
               component: creatOrder,
-
             },
-            // checkout
+            // 付款
             {
               name: "CustomerCheckout",
               path: "checkout/:orderId",
@@ -81,11 +80,12 @@ export default new Router({
             },
           ]
         },
+        // 付款成功
         {
           name: "CheckoutSuccess",
           path: "checkout_success",
           component: checkoutSuccess,
-        }
+        },
       ]
     },
     {

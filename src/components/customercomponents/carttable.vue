@@ -4,7 +4,12 @@
             <h3 class="mb-3 text-center">訂單商品</h3>
                 <table class="table">
                             <thead>
-                                <th width="30%"></th>
+                                <th width="30%">
+                                    <a class="a-link" @click.prevent="backCart" href="#">
+                                        <i class="fas fa-chevron-left"></i>
+                                        返回購物車
+                                    </a>
+                                </th>
                                 <th  class="align-middle">商品名稱</th>
                                 <th>數量</th>
                                 <th>單價</th>
@@ -34,6 +39,16 @@
 
 <script>
     export default{
-        props:['table']
+        props:['table'],
+       methods:{
+           backCart(){
+               this.$emit("backCart");
+           }
+        }
     }
 </script>
+<style>
+    .a-link:hover{
+        text-decoration:none;
+    }
+</style>

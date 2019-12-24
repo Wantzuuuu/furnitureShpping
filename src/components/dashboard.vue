@@ -16,7 +16,7 @@
 <script>
   import navbar from './dashboardPage/navbar';
   import sidebar from'./dashboardPage/sidebar';
-  import alert from './alertMessage'
+  import alert from './alertmessage'
   export default{
     components:{
       navbar,

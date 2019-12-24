@@ -1,7 +1,7 @@
 <template>
     <div style="position:relative;">
     <Loading :active.sync="isLoading"></Loading>
-        <Navbar :navbarLen="cartLen" :navbarPath="path" :navPath="pathState"></Navbar>
+        <Navbar :navbarLen="cartLen" :navbarPath="path" :navPath="pathState" :isCheckout="isCheckout"></Navbar>
         <alert></alert>
         <cartPanel :cartPanel="carts" :cartLen="cartLen" :deleteState="status.deleteCart" @deleteProduct="deleteCart"></cartPanel>
         <router-view></router-view>
@@ -16,7 +16,7 @@
         import Navbar from "./customercomponents/navbar"
         import cartPanel from "./customercomponents/cartpanel";
         import Footer from "./customercomponents/footer";
-        import alert from './alertMessage';
+        import alert from './alertmessage';
         import {mapGetters} from "vuex";
     export default{
         components:{
@@ -55,6 +55,13 @@
                 return false;
             }
         },
+        isCheckout(){
+            if(this.path == "/customer_website/checkout_page"){
+                return true;
+            }else{
+                return false;
+            }
+        },
         isLoading(){
             return this.$store.state.isLoading;
         },
@@ -72,9 +79,9 @@
     created(){
             this.getProducts();
             this.getCart();
-            this.$bus.$on('updateCart',()=>{
-                this.getCart();
-            });
+            // this.$bus.$on('updateCart',()=>{
+            //     this.getCart();
+            // });
             this.path=this.$route.path;
         },
         watch: {

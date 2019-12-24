@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import alert from '../alertMessage';
+import alert from '../alertmessage';
 export default {
   name: 'Login',
   components:{

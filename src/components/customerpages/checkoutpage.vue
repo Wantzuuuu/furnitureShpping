@@ -2,7 +2,7 @@
     <div>
         <div class="my-10">
             <div class="container">
-                <checkoutTable :table="carts"></checkoutTable>
+                <checkoutTable :table="carts" @backCart="goBackCart"></checkoutTable>
                 <hr>
                 <router-view></router-view>
             </div>
@@ -12,26 +12,24 @@
 
 
 <script>
-import checkoutTable from '../customercomponents/checkoutTable';
+import checkoutTable from '../customercomponents/carttable';
     export default{
         components:{
             checkoutTable,
         },
-        data(){
-            return {
-                carts:[],
-            }
-        },
         methods:{
                 getCart(){
                     const vm = this ; 
-                    vm.$store.dispatch('updateLoading',true);
-                    const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-                    vm.$http.get(url).then((response)=>{
-                        vm.carts = response.data.data;
-                        vm.$store.dispatch('updateLoading',false);
-                    })
+                    vm.$store.dispatch("getCart");
                 },
+                goBackCart(){
+                    this.$router.push('/customer_website/cart')
+                }
+        },
+        computed:{
+            carts(){
+                return this.$store.state.carts;
+            }
         },
         created(){
             this.getCart();

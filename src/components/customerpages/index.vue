@@ -165,7 +165,7 @@
                         <div class="col-md-5 mt-2 mt-md-0">
                             <div class="h-100 d-flex align-items-center">
                                 <div class="p-1 designer-content text-white">
-                                    <h1 class="acme display-4">Modern-industrial</h1>
+                                    <h1 class="acme display-5">Modern-industrial</h1>
                                     <p class="mt-3">
                                         我喜歡90年代那種追求個性、自由的簡單風格，所以我花了很多時間細細品味那個年代的純真，帶點陳年舊味的皮革和鉚釘依然是工業風的經典，工業風兼具復古與當時人們想要積極進取的精神，看似過去歷史的氛圍，卻也代表著當時人們對未來的想像力，希望能透過這些家具，讓你們感受那段工業風個的歷史。
                                     </p>
@@ -176,8 +176,8 @@
                 </div>
             </div>
         </section>
-        <section class="my-md-10">
-            <div class="container d-md-none">
+        <section class="my-lg-10">
+            <div class="container d-lg-none">
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <h1 class="my-5 acme text-center text-primary border-bottom border-primary">Find Your Style-</h1>
@@ -201,7 +201,7 @@
                         <div class="col-md-5 mt-2 mt-md-0">
                             <div class="h-100 d-flex align-items-center">
                                 <div class="p-1 designer-content text-white">
-                                    <h1 class="acme display-4">Scandi design</h1>
+                                    <h1 class="acme display-5">Scandi design</h1>
                                     <p class="mt-3">
                                         透過低調的線條和室內光線來展現簡潔的家具外觀，運用大量的木質材料來展現濃郁後現代主義，極簡的北歐風回歸自然，崇尚原木韻味，外加現代、實用、休閒的設計風格，看似簡單，但你卻會感受到設計師對於小細節的要求與精工細作，透過北歐風來與你家中的格局達到你心中家的樣子吧。
                                     </p>
@@ -485,8 +485,10 @@ import $ from "jquery";
          margin-top:-80px;
          margin-bottom:-80px;
      }
-     @media(max-width:576px){
+     @media(max-width:992px){
          .over-height{
+             display:flex;
+        align-items:center;
          margin-top:0px;
          margin-bottom:0px
      }

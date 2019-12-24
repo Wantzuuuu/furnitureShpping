@@ -18,10 +18,8 @@
                 <div class="col-md-3">
                     <div class="list-group sticky-top z-index-9">
                         <h4 class="border p-3 mb-0">商品列表</h4>
-                        <div class="list-group ">
-                            <button @click="changeProduct('all')" :class="{'active':productTarget=='all'}" class="list-group-item   list-group-item-action"  style="outline:none;">全部</button>
-                            <button v-for="(i,k) in category"  :class="{'active':productTarget==i}" :key="k" @click="changeProduct(i)" class="list-group-item  list-group-item-action"  style="outline:none;">{{i}}</button>
-                        </div> 
+                            <li @click="changeProduct('all')" :class="{'active':productTarget=='all'}" class="list-group-item   list-group-item-action"  style="outline:none;">全部</li>
+                            <li v-for="(i,k) in category"  :class="{'active':productTarget==i}" :key="k" @click="changeProduct(i)" class="list-group-item  list-group-item-action"  style="outline:none;">{{i}}</li>
                     </div>
                 </div>
                 <!--list group end-->
@@ -121,6 +119,14 @@ import productCard from "../customercomponents/productcard"
                         return vm.productTarget == v.category;
                     })
                 }
+            },
+            hotProduct(){
+                const hotList = [];
+                this.products.forEach((v,i)=>{
+                    if(i<3){
+                        hotList.push(v);
+                    }
+                })
             },
         },
         created(){

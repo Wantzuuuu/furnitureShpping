@@ -1,9 +1,10 @@
 <template>
     <div>
-        <div class="cart-panel animated">
+        <div class="cart-panel animated fast">
             <div class="cart-block">
-                <div class="cart-panel-header">
-                    <div class="h6 mb-0">購物車</div>
+                <div class="cart-panel-header align-items-center">
+                    <div class="h6 mb-0 d-inline">購物車</div>
+                    <a @click.prevent="removeCartModal" class="ml-auto" href="#"><i class="fas fa-chevron-right text-white"></i></a>
                 </div>
                 <div v-if="cartLen == 0" class="cart-item p-4">
                     <div  class="text-center mb-0 w-100">
@@ -11,7 +12,8 @@
                     </div>
                 </div>
                 <div v-for="i in cartPanel.carts" class="cart-item">
-                    <div class="cart-img" :style="{backgroundImage:`url(${i.product.imageUrl})`}"></div>
+                    
+                    <img class="cart-img" :src="i.product.imageUrl" alt="">
                     <div class="cart-content">
                         <div>
                             <h6 class="mb-0">{{i.product.title}}</h6>
@@ -45,7 +47,7 @@
         props:['cartPanel','cartLen','deleteState'],
         watch:{
             cartLen (){
-                if(this.cartLen>5){
+                if(this.cartLen>4){
                     $(".cart-block").addClass('over-flow-y');
                 }else{
                     $(".cart-block").removeClass('over-flow-y');
@@ -54,15 +56,18 @@
         },
         methods:{
             openCartModal(){
-                $('.cart-panel').addClass('fadeInLeft');
                 $('.cart-panel').addClass('active');
+                $('.cart-panel').addClass('fadeInRight');
                 $('.cart-cancel').addClass('active');
-                $('.cart-panel').removeClass('fadeOutLeft');
+                $('.cart-panel').removeClass('fadeOutRight');
             },
             removeCartModal(){
-                $('.cart-panel').removeClass('fadeInLeft');
-                $('.cart-panel').addClass('fadeOutLeft');
+                $('.cart-panel').removeClass('fadeInRight');
+                $('.cart-panel').addClass('fadeOutRight');
                 $('.cart-cancel').removeClass('active');
+                setTimeout(()=>{
+                    $('.cart-panel').removeClass('active');
+                },500)
             },
             deleteProduct(id){
                 console.log(id);
@@ -72,8 +77,8 @@
             },
             goCheckout(){
                 const vm = this;
-                $('.cart-panel').removeClass('fadeInLeft');
-                $('.cart-panel').addClass('fadeOutLeft');
+                $('.cart-panel').removeClass('fadeInRight');
+                $('.cart-panel').addClass('fadeOutRight');
                 $('.cart-cancel').removeClass('active');
                 vm.$router.push('/customer_website/cart')
             }
@@ -95,15 +100,29 @@
     .cart-panel{
         position:fixed;
         top:0;
-        left:0;
-        width:23%;
+        right:0;
+        width:85%;
         display:flex;
         z-index:20;
-         transition:all 1.2s ease;
-    }
-    .cart-panel.active{
         display:block;
+        transition:all 0.3s ease;
     }
+    @media(min-width:576px){
+        .cart-panel{
+            width:50%;
+        }
+    }
+    @media(min-width:768px){
+        .cart-panel{
+            width:40%;
+        }
+    }
+     @media(min-width:992px){
+        .cart-panel{
+            width:25%;
+        }
+    }
+    
     .cart-block{
         width:100%;
         height:100vh;
@@ -127,19 +146,16 @@
         background-color:rgba(0,0,0,0.3);
         opacity:0;
         display:none;
+        transition:all .3s ease;
     }
     .cart-cancel.active{
         opacity:1;
         display:block;
     }
-    @media(max-width:576px){
-        .cart-panel{
-            width:85%;
-        }
-    }
     .cart-panel-header{
         padding:23px;
         background-color:#1f2429;
+        display:flex;
     }
     .cart-item{
         padding:13px;
@@ -150,8 +166,6 @@
     .cart-item .cart-img{
         width:45%;
         height:100px;
-        background-size:cover;
-        background-position:center center;
     }
     .cart-item .cart-content{
         width:45%;

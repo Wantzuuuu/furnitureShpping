@@ -2,15 +2,22 @@
     <div>
         <section class="mt-7 py-5 pt-2">
              <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
+                <div class="row mb-5">
+                    <div class="col-md-7" style="position:relative">
                         <img width="100%" class="dc-img" :src="product.imageUrl" alt="">
+                        <a class="a-link" @click.prevent="goBack" href="#">
+                            <i class="fas fa-chevron-left"></i>
+                            back
+                        </a>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="p-3 sticky-top z-index-9">
-                            <h3>{{product.title}}</h3>
+                            <h3 class="text-primary">{{product.title}}</h3>
                             <hr>
-                            <p>{{product.description}}</p>
+                            <h5 class="text-primary">商品介紹</h5>
+                            <p class="text-primary pl-1">{{product.description}}</p>
+                            <h5 v-if="product.content" class="text-primary mt-4">商品備註</h5>
+                            <p class="text-primary pl-1">{{product.content}}</p>
                             <div class="d-flex">
                                 <del class="text-muted">NT.{{product.origin_price | currency}}</del>
                                 <span class="ml-auto h4 text-danger">NT.{{product.price | currency}}</span>
@@ -38,7 +45,7 @@
              </div>
              <hr>
              <div class="container">
-                <h3 class="text-center">類似商品</h3>
+                <h3 class="text-center text-primary">類似商品</h3>
                 <div class="form-row">
                     <productCard v-for="i in sameProduct" :productCard="i" @emitProduct="goDescription" @emitAddCart="addCart" :key="i.id"></productCard>
                 </div>
@@ -82,7 +89,7 @@
                 vm.getProduct();
             },
             goBack(){
-                this.$router.go(-1);
+                this.$router.push("/customer_website/products/all");
             },
             addCount(num){
                 let qty=this.qty;
@@ -126,6 +133,7 @@
             this.productId = this.$route.params.productId;
             this.getProduct();
             this.getProducts();
+            console.log(this.$rote.params);
         }
     }
    
@@ -142,5 +150,18 @@
         .dc-img{
             height:350px;
         }
+    }
+    .a-link{
+        position:absolute;
+        left:0px;
+        bottom:-25px;
+    }
+    @media(max-width:768px){
+        .a-link{
+            display:none;
+        }
+    }
+    .a-link:hover{
+        text-decoration:none;
     }
 </style>
