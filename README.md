@@ -1,7 +1,7 @@
 ## Vue 家具電商網頁
 ## 頁面展示
-#### [vue-e-commerce](https://wantzuuuu.github.io/furnitureShopping/#/customer_website/index)
-## 頁面特色
+* [vue-e-commerce](https://wantzuuuu.github.io/furnitureShopping/#/customer_website/index)
+## 頁面特點
 * 電子實務專案實作
 * 首頁形象頁面加入 JQUERY 動畫
 * 產品進行分類
@@ -24,3 +24,18 @@
  * 產品管理:進行產品新增或修改，名稱、價格、分類管理等...
  * 訂單管理:查看訂單產品數量、客戶資料，付款裝態
  * 優惠卷管理:新增或者修改優惠卷的名稱、代碼、折扣提供客戶使用
+
+## 頁面介紹
+
+前台
+
+     * 首頁形象頁面（家具風格以及設計師介紹）
+     * 產品總覽頁面
+     * 產品搜尋
+     * 產品詳細敘述頁面
+     * 產品總覽頁面
+     * 最新消息頁面
+     * 購物車頁面（輸入折扣碼代號）
+     * 訂單確認頁面
+     * 付款頁面
+     * 訂單成立頁面
