@@ -40,7 +40,7 @@
    * 付款頁面
    * 訂單成立頁面
  
- [後台] (https://wantzuuuu.github.io/furnitureShopping/?#/login)
+ [後台](https://wantzuuuu.github.io/furnitureShopping/?#/login)
  
   * 使用者登入驗證
   * 商品管理頁面
