@@ -27,7 +27,7 @@
 
 ## 頁面介紹
 
-前台
+[前台](https://wantzuuuu.github.io/furnitureShopping/#/customer_website/index)
 
    * 首頁形象頁面（家具風格以及設計師介紹）
    * 產品總覽頁面
@@ -40,7 +40,7 @@
    * 付款頁面
    * 訂單成立頁面
  
- 後台
+ [後台] (https://wantzuuuu.github.io/furnitureShopping/?#/login)
  
   * 使用者登入驗證
   * 商品管理頁面
