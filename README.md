@@ -54,3 +54,13 @@
   * jquery
   * API(axios)
   * bootsrap 4
+  * rwd
+  * sass
+  
+## 使用套件
+  
+  * vue-router
+  * vue-vuex
+  * vue-axios
+  * vue-loading
+  * vee-validate
