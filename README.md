@@ -48,3 +48,9 @@
   * 優惠卷管理頁面
 
 ## 使用技術
+  
+  * vue.js
+  * javascript(ES6)
+  * jquery
+  * API(axios)
+  * bootsrap 4
